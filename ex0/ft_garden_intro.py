@@ -11,5 +11,6 @@ def garden_intro() -> None:
     print()
     print("=== End of Program ===")
 
+
 if __name__ == "__main__":
     garden_intro()
