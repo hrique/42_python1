@@ -1,0 +1,135 @@
+#!/usr/bin/env python3
+
+
+class Plant:
+    def __init__(self, name, height, age_days, growth):
+        self.name = name
+        self._height = height
+        self._age_days = age_days
+        self._growth = growth
+
+    def show(self):
+        print(
+            f"{self.name.capitalize()}: {round(self.get_height(), 1)}cm, "
+            f"{self.get_age()} days old"
+        )
+
+    def get_growth(self) -> float:
+        return self._growth
+
+    def grow(self, verbose=True):
+        self.set_height(self._height + self.get_growth(), verbose)
+
+    def age(self, verbose=True):
+        self.set_age(self._age_days + 1, verbose)
+
+    def get_height(self) -> float:
+        return self._height
+
+    def set_height(self, new_height, verbose=True):
+        if new_height >= 0:
+            self._height = new_height
+            if verbose:
+                print(f"Height updated: {round(self.get_height())}cm")
+        else:
+            print(f"{self.name.capitalize()}: Error, height can't be negative")
+            print("Height update rejected")
+
+    def get_age(self) -> int:
+        return self._age_days
+
+    def set_age(self, new_age, verbose=True):
+        if new_age >= 0:
+            self._age_days = new_age
+            if verbose:
+                print(f"Age updated: {self.get_age()} days")
+        else:
+            print(f"{self.name.capitalize()}: Error, age can't be negative")
+            print("Age update rejected")
+
+    @staticmethod
+    def check_age(given_age):
+        if given_age > 365:
+            return True
+        else:
+            return False
+
+    @classmethod
+    def anonymous_plant(cls):
+        return cls("Unknown plant", 0.0, 0, 0)
+
+
+class Flower(Plant):
+    def __init__(self, name, height, age_days, growth, color):
+        super().__init__(name, height, age_days, growth)
+        self.color = color
+        self._bloomed = False
+
+    def show(self):
+        super().show()
+        print(f" Color: {self.color}")
+        if self._bloomed:
+            print(f" {self.name.capitalize()} is blooming beautifully!")
+        else:
+            print(f" {self.name.capitalize()} has not bloomed yet")
+
+    def bloom(self):
+        print(f"[asking the {self.name} to bloom]")
+        self._bloomed = True
+
+
+class Tree(Plant):
+    def __init__(self, name, height, age_days, growth, trunk_diameter):
+        super().__init__(name, height, age_days, growth)
+        self._trunk_diameter = trunk_diameter
+
+    def get_trunk(self) -> float:
+        return self._trunk_diameter
+
+    def show(self):
+        super().show()
+        print(f" Trunk diameter: {round(self.get_trunk(), 1)}cm")
+
+    def produce_shade(self):
+        print(f"[asking the {self.name} to produce shade]")
+        print(
+            f"Tree {self.name.capitalize()} now produces a shade of "
+            f"{round(super().get_height(), 1)}cm long and "
+            f"{round(self.get_trunk(), 1)}cm wide."
+        )
+
+
+class Vegetable(Plant):
+    def __init__(self, name, height, age_days, growth, harvest_season,
+                 nutritional_value):
+        super().__init__(name, height, age_days, growth)
+        self.harvest_season = harvest_season
+        self._nutritional_value = nutritional_value
+
+    def show(self):
+        super().show()
+        print(f" Harvest season: {self.harvest_season.capitalize()}")
+        print(f" Nutritional value: {round(self._nutritional_value)}")
+
+    def age_and_grow(self, days):
+        print(f"[make tomato grow and age for {days} days]")
+        for _ in range(days):
+            self.grow(verbose=False)
+            self.age(verbose=False)
+            self._nutritional_value += 1
+
+
+def main() -> None:
+    print("=== Garden statistics ===")
+    print("=== Check year-old")
+    print(f"Is 30 days more than a year? -> {Plant.check_age(30)}")
+    print(f"Is 400 days more than a year? -> {Plant.check_age(400)}")
+    print()
+    print("=== Flower")
+    print("=== Anonymous")
+    unknown = Plant.anonymous_plant()
+    unknown.show()
+
+
+if __name__ == "__main__":
+    main()
