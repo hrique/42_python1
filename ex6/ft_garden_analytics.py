@@ -17,12 +17,20 @@ class Plant:
         def count_show(self) -> None:
             self._show_count += 1
 
+        def get_grow_count(self) -> int:
+            return self._grow_count
+
+        def get_age_count(self) -> int:
+            return self._age_count
+
+        def get_show_count(self) -> int:
+            return self._show_count
+
         def display_stats(self) -> None:
             print(f"statistics for {self.name}")
             print(
                 f"Stats: {self._grow_count} grow, {self._age_count} age,"
-                f" {self._show_count} show
-                "
+                f" {self._show_count} show"
             )
 
     def __init__(self, name: str, height: float, age_days: int,
