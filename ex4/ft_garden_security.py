@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 
 class Plant:
-    def __init__(self, name, height, age_days, growth):
+    def __init__(self, name: str, height: float, age_days: int,
+                 growth: float) -> None:
         self.name = name
         self._height = height
         self._age_days = age_days
         self._growth = growth
 
-    def show(self):
+    def show(self) -> None:
         print(
             f"{self.name.capitalize()}: {round(self.get_height(), 1)}cm, "
             f"{self.get_age()} days old"
@@ -16,16 +17,16 @@ class Plant:
     def get_growth(self) -> float:
         return self._growth
 
-    def grow(self):
+    def grow(self) -> None:
         self.set_height(self._height + self.get_growth())
 
-    def age(self):
+    def age(self) -> None:
         self.set_age(self._age_days + 1)
 
     def get_height(self) -> float:
         return self._height
 
-    def set_height(self, new_height):
+    def set_height(self, new_height: float) -> None:
         if new_height >= 0:
             self._height = new_height
             print(f"Height updated: {round(self.get_height())}cm")
@@ -36,7 +37,7 @@ class Plant:
     def get_age(self) -> int:
         return self._age_days
 
-    def set_age(self, new_age):
+    def set_age(self, new_age: int) -> None:
         if new_age >= 0:
             self._age_days = new_age
             print(f"Age updated: {self.get_age()} days")
