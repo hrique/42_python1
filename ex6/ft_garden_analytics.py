@@ -3,19 +3,27 @@
 
 class Plant:
     class Stats:
-        def __init__(self):
+        def __init__(self) -> None:
             self._grow_count = 0
             self._age_count = 0
             self._show_count = 0
 
-        def count_grow(self):
+        def count_grow(self) -> None:
             self._grow_count += 1
 
-        def count_age(self):
+        def count_age(self) -> None:
             self._age_count += 1
 
-        def count_show(self):
+        def count_show(self) -> None:
             self._show_count += 1
+
+        def display_stats(self) -> None:
+            print(f"statistics for {self.name}")
+            print(
+                f"Stats: {self._grow_count} grow, {self._age_count} age,"
+                f" {self._show_count} show
+                "
+            )
 
     def __init__(self, name: str, height: float, age_days: int,
                  growth: float) -> None:
