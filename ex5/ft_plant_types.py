@@ -4,9 +4,12 @@ class Plant:
     def __init__(self, name: str, height: float, age_days: int,
                  growth: float) -> None:
         self.name = name
-        self._height = height
-        self._age_days = age_days
-        self._growth = growth
+        self._height = 0.0
+        self._age_days = 0
+        self._growth = 0.0
+        self.set_height(height, verbose=False)
+        self.set_age(age_days, verbose=False)
+        self.set_growth(growth, verbose=False)
 
     def show(self) -> None:
         print(
@@ -18,19 +21,19 @@ class Plant:
         return self._growth
 
     def grow(self, verbose: bool = True) -> None:
-        self.set_height(self._height + self.get_growth(), verbose)
+        self.set_height(self.get_height() + self.get_growth(), verbose)
 
     def age(self, verbose: bool = True) -> None:
-        self.set_age(self._age_days + 1, verbose)
+        self.set_age(self.get_age() + 1, verbose)
 
     def get_height(self) -> float:
         return self._height
 
-    def set_height(self, new_height, verbose: bool = True) -> None:
+    def set_height(self, new_height: float, verbose: bool = True) -> None:
         if new_height >= 0:
             self._height = new_height
             if verbose:
-                print(f"Height updated: {round(self.get_height())}cm")
+                print(f"Height updated: {round(self.get_height(), 1)}cm")
         else:
             print(f"{self.name.capitalize()}: Error, height can't be negative")
             print("Height update rejected")
@@ -38,7 +41,7 @@ class Plant:
     def get_age(self) -> int:
         return self._age_days
 
-    def set_age(self, new_age, verbose: bool = True) -> None:
+    def set_age(self, new_age: int, verbose: bool = True) -> None:
         if new_age >= 0:
             self._age_days = new_age
             if verbose:
@@ -46,6 +49,16 @@ class Plant:
         else:
             print(f"{self.name.capitalize()}: Error, age can't be negative")
             print("Age update rejected")
+
+    def set_growth(self, new_growth: float, verbose: bool = True) -> None:
+        if new_growth >= 0:
+            self._growth = new_growth
+            if verbose:
+                print(f"Growth updated: {round(self.get_growth(), 1)}cm")
+        else:
+            print(f"{self.name.capitalize()}: "
+                  "Error, growth can't be negative")
+            print("Growth update rejected")
 
 
 class Flower(Plant):
@@ -72,10 +85,20 @@ class Tree(Plant):
     def __init__(self, name: str, height: float, age_days: int,
                  growth: float, trunk_diameter: float) -> None:
         super().__init__(name, height, age_days, growth)
-        self._trunk_diameter = trunk_diameter
+        self._trunk_diameter = 0.0
+        self.set_trunk(trunk_diameter, verbose=False)
 
     def get_trunk(self) -> float:
         return self._trunk_diameter
+
+    def set_trunk(self, new_trunk: float, verbose: bool = True) -> None:
+        if new_trunk >= 0:
+            self._trunk_diameter = new_trunk
+            if verbose:
+                print(f"Trunk updated: {round(self.get_trunk(), 1)}cm")
+        else:
+            print(f"{self.name.capitalize()}: Error, trunk can't be negative")
+            print("Trunk update rejected")
 
     def show(self) -> None:
         super().show()
@@ -92,22 +115,23 @@ class Tree(Plant):
 
 class Vegetable(Plant):
     def __init__(self, name: str, height: float, age_days: int, growth: float,
-                 harvest_season: str, nutritional_value: int) -> None:
+                 harvest_season: str) -> None:
         super().__init__(name, height, age_days, growth)
         self.harvest_season = harvest_season
-        self._nutritional_value = nutritional_value
+        self._nutritional_value = 0.0
 
     def show(self) -> None:
         super().show()
         print(f" Harvest season: {self.harvest_season.capitalize()}")
-        print(f" Nutritional value: {round(self._nutritional_value)}")
+        print(f" Nutritional value: {round(self._nutritional_value, 1)}")
 
-    def age_and_grow(self, days: int) -> None:
-        print(f"[make tomato grow and age for {days} days]")
-        for _ in range(days):
-            self.grow(verbose=False)
-            self.age(verbose=False)
-            self._nutritional_value += 1
+    def age(self, verbose: bool = True) -> None:
+        super().age(verbose)
+        self._nutritional_value += 0.5
+
+    def grow(self, verbose: bool = True) -> None:
+        super().grow(verbose)
+        self._nutritional_value += 0.5
 
 
 def main() -> None:
@@ -124,9 +148,12 @@ def main() -> None:
     oak.produce_shade()
     print()
     print("=== Vegetable")
-    tomato = Vegetable("tomato", 5.0, 10, 2.1, "april", 0)
+    tomato = Vegetable("tomato", 5.0, 10, 2.1, "april")
     tomato.show()
-    tomato.age_and_grow(20)
+    print("[make tomato grow and age for 20 days]")
+    for _ in range(20):
+        tomato.grow(verbose=False)
+        tomato.age(verbose=False)
     tomato.show()
 
 
