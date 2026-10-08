@@ -153,7 +153,7 @@ class Tree(Plant):
 
     def produce_shade(self) -> None:
         self._stats.count_shade()
-        print(f" [asking the {self.name} to produce shade]")
+        print(f"[asking the {self.name} to produce shade]")
         print(
             f"Tree {self.name.capitalize()} now produces a shade of "
             f"{round(super().get_height(), 1)}cm long and "
@@ -187,7 +187,6 @@ class Seed(Flower):
                  color: str) -> None:
         super().__init__(name, height, age_days, growth, color)
         self._seeds = 0
-        self._stats: Seed.Stats = Seed.Stats()
 
     def bloom(self) -> None:
         super().bloom()
@@ -199,7 +198,7 @@ class Seed(Flower):
 
 
 def display_stats(plant: Plant) -> None:
-    print(f" [statistics for {plant.name.capitalize()}]")
+    print(f"[statistics for {plant.name.capitalize()}]")
     plant.get_stats().display()
 
 
@@ -212,7 +211,7 @@ def main() -> None:
     rose = Flower("rose", 15.0, 10, 8.0, "red")
     rose.show()
     display_stats(rose)
-    print(" [asking the rose to grow and bloom]")
+    print("[asking the rose to grow and bloom]")
     rose.grow(verbose=False)
     rose.bloom()
     rose.show()
@@ -226,7 +225,7 @@ def main() -> None:
     print("\n=== Seed")
     sunflower = Seed("sunflower", 80.0, 45, 30.0, "yellow")
     sunflower.show()
-    print(" [make sunflower grow, age and bloom]")
+    print("[make sunflower grow, age and bloom]")
     sunflower.grow(verbose=False)
     sunflower.age(20, verbose=False)
     sunflower.bloom()
