@@ -4,9 +4,12 @@ class Plant:
     def __init__(self, name: str, height: float, age_days: int,
                  growth: float) -> None:
         self.name = name
-        self._height = height
-        self._age_days = age_days
-        self._growth = growth
+        self._height = 0.0
+        self._age_days = 0
+        self._growth = 0.0
+        self.set_height(height, verbose=False)
+        self.set_age(age_days, verbose=False)
+        self.set_growth(growth, verbose=False)
 
     def show(self) -> None:
         print(
@@ -18,7 +21,7 @@ class Plant:
         return self._growth
 
     def grow(self) -> None:
-        self.set_height(self._height + self.get_growth())
+        self.set_height(self.get_height() + self.get_growth())
 
     def age(self) -> None:
         self.set_age(self._age_days + 1)
@@ -26,10 +29,11 @@ class Plant:
     def get_height(self) -> float:
         return self._height
 
-    def set_height(self, new_height: float) -> None:
+    def set_height(self, new_height: float, verbose: bool = True) -> None:
         if new_height >= 0:
             self._height = new_height
-            print(f"Height updated: {round(self.get_height())}cm")
+            if verbose:
+                print(f"Height updated: {round(self.get_height(), 1)}cm")
         else:
             print(f"{self.name.capitalize()}: Error, height can't be negative")
             print("Height update rejected")
@@ -37,13 +41,24 @@ class Plant:
     def get_age(self) -> int:
         return self._age_days
 
-    def set_age(self, new_age: int) -> None:
+    def set_age(self, new_age: int, verbose: bool = True) -> None:
         if new_age >= 0:
             self._age_days = new_age
-            print(f"Age updated: {self.get_age()} days")
+            if verbose:
+                print(f"Age updated: {self.get_age()} days")
         else:
             print(f"{self.name.capitalize()}: Error, age can't be negative")
             print("Age update rejected")
+
+    def set_growth(self, new_growth: float, verbose: bool = True) -> None:
+        if new_growth >= 0:
+            self._growth = new_growth
+            if verbose:
+                print(f"Growth updated: {round(self.get_growth(), 1)}cm")
+        else:
+            print(f"{self.name.capitalize()}: "
+                  "Error, growth can't be negative")
+            print("Growth update rejected")
 
 
 def main() -> None:
