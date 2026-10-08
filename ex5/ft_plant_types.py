@@ -123,7 +123,7 @@ class Vegetable(Plant):
     def show(self) -> None:
         super().show()
         print(f" Harvest season: {self.harvest_season.capitalize()}")
-        print(f" Nutritional value: {round(self._nutritional_value, 1)}")
+        print(f" Nutritional value: {int(self._nutritional_value)}")
 
     def age(self, verbose: bool = True) -> None:
         super().age(verbose)
